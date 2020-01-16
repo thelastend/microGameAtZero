@@ -187,7 +187,7 @@ microGameAtZero_err MICROGAMEATZERO::getFileList(char **ppFileName)
 
 
 /**
- * @brief This function writes data to the UART interface.
+ * @brief This function writes data to the UART interface. (/0 terminiert)
  * 
  * @param pData pointer to the data to be write
  * @return the number of transferred bytes,
