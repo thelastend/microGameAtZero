@@ -28,7 +28,7 @@
 microGameAtZero_err initSD();
 void unmountSD();
 microGameAtZero_err writeTo(char fileName[MAX_LENGTH_NAME],char *text);
-char* readFrom(char fileName[MAX_LENGTH_NAME]);
+microGameAtZero_err readFrom(char fileName[MAX_LENGTH_NAME], char *pBuffer, uint32_t sizeBuffer);
 microGameAtZero_err getFiles(char *fileName[MAX_LENGTH_NAME]);
 
 

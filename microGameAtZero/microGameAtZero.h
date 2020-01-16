@@ -49,7 +49,7 @@ public:
     microGameAtZero_err addNewScene(SCENE *scene);
     microGameAtZero_err loadScene(uint16_t position);   
     microGameAtZero_err saveFile(char *fileName,  char *data);
-    char* loadFile(char *fileName);
+    microGameAtZero_err loadFile(char *pFileName, char *pBuffer, uint32_t sizeBuffer);
     microGameAtZero_err getFileList(char **fileName);
     microGameAtZero_err sendSerial(char* data);    
     bool getButton(uint8_t  selectButton);

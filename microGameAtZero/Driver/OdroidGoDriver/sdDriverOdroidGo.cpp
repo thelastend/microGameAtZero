@@ -95,12 +95,12 @@ microGameAtZero_err writeTo(char fileName[MAX_LENGTH_NAME], char *text)
 }
 
 
-char* readFrom(char fileName[MAX_LENGTH_NAME])
+microGameAtZero_err readFrom(char fileName[MAX_LENGTH_NAME], char *pBuffer, uint32_t sizeBuffer)
 {
-    static char text[MAX_SAVE_SIZE];
+    microGameAtZero_err readError = MICRO_GAME_AT_ZERO_INVALID_PARAM;
+
     char path[MAX_FOLDER_NAME];
     memset(path,'\0',MAX_FOLDER_NAME);
-    memset(text,0,MAX_SAVE_SIZE);
 
     if(strlen(fileName)< MAX_LENGTH_NAME)
     {
@@ -110,16 +110,17 @@ char* readFrom(char fileName[MAX_LENGTH_NAME])
 
         if (file != NULL) 
         {
-            fgets(text, MAX_SAVE_SIZE, file);
-            fclose(file);        
+            fgets(pBuffer, sizeBuffer, file);
+            fclose(file); 
+            readError = MICRO_GAME_AT_ZERO_OK;     
         }  
         else
         {
-            memset(text,'\0',MAX_SAVE_SIZE);
+            memset(pBuffer,'\0',sizeBuffer);
         }
              
     }
-    return text;
+    return readError;
 }
 
 

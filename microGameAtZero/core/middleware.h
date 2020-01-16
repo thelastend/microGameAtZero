@@ -45,7 +45,7 @@ microGameAtZero_err fillRect(uint16_t startX, uint16_t startY, uint16_t endX, ui
 
 /*SD Card*/
 microGameAtZero_err sendDataSd(char *pFileName, char *pData);
-char*               readDataSd(char *pFileName);
+microGameAtZero_err readDataSd(char *pFileName, char *pBuffer, uint32_t sizeBuffer);
 microGameAtZero_err existedFiles(char *files[MAX_LENGTH_NAME]);
 
 /*UART*/

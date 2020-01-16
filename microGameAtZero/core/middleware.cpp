@@ -276,7 +276,7 @@ microGameAtZero_err fillRect(uint16_t startX, uint16_t startY, uint16_t endX, ui
 /**
  * @brief This middleware function handles the process of sending the data to the sd card. 
  * 
- * @param pFileName pointer to the filename where the data should be written
+ * @param pFileName pointer to the filename where the data should be written (max length MAX_LENGTH_NAME)
  * @param pData pointer to the data
  * @return MICRO_GAME_AT_ZERO_OK everything is OK
  * @return MICRO_GAME_AT_ZERO_INIT_ERROR in the event of a hardware initialization error 
@@ -305,29 +305,29 @@ microGameAtZero_err sendDataSd(char *pFileName, char *pData)
 /**
  * @brief This middlware function handles the process of reading the data from the sd card. 
  * 
- * @param pFileName pointer to the filename of the file to be read from
- * @return the read data, if NULL then there is no data to read 
+ * @param pFileName pointer to the filename of the file to be read from (max fileName length MAX_LENGTH_NAME)
+ * @param pBuffer pointer to the buffer where the data should be loaded
+ * @param sizeBuffer size of the buffer
+ * @return MICRO_GAME_AT_ZERO_OK everything is OK
+ * @return MICRO_GAME_AT_ZERO_INIT_ERROR in the event of a hardware initialization error 
+ * @return MICRO_GAME_AT_ZERO_INVALID_PARAM invalid parameter ( e.g fileName > MAX_LENGTH_NAME, pBuff == NULL ...)
  */
-char* readDataSd(char *fileName)
+microGameAtZero_err readDataSd(char *pFileName, char *pBuffer, uint32_t sizeBuffer)
 {
     microGameAtZero_err error = MICRO_GAME_AT_ZERO_INIT_ERROR;
-    static char* data = NULL;
 
     if(isDisplayConnected())
         disconnectDisplay();
     error = initSD();
-    if(error == MICRO_GAME_AT_ZERO_OK)
+    if((error == MICRO_GAME_AT_ZERO_OK) && (pBuffer != NULL) && (pFileName != NULL))
     {
-        data = readFrom(fileName);
+        error = readFrom(pFileName, pBuffer, sizeBuffer);
         unmountSD();
     }
-    else
-    {
-        data = NULL;
-    }
+
     if(!isDisplayConnected())
         displayConnect();
-    return data;
+    return error;
 }
 
 
@@ -376,6 +376,7 @@ microGameAtZero_err setupUart()
  * 
  * @param pMsg pointer to the message to be sent
  * @return the number of transferred bytes
+ * @return MICRO_GAME_AT_ZERO_INVALID_PARAM error
  */
 microGameAtZero_err sendMsgUart(const char *pMsg)
 {

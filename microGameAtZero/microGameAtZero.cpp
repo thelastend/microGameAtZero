@@ -147,7 +147,7 @@ vector2 MICROGAMEATZERO::getCollision(Object* pObj1, Object* pObj2)
 /**
  * @brief This function saves the passed data to the selected file.
  * 
- * @param pFileName name of the save file
+ * @param pFileName name of the save file (max length MAX_LENGTH_NAME)
  * @param pData pointer to the data to be saved
  * @return MICRO_GAME_AT_ZERO_OK everything is OK
  * @return MICRO_GAME_AT_ZERO_INIT_ERROR in the event of a hardware initialization error 
@@ -161,12 +161,16 @@ microGameAtZero_err MICROGAMEATZERO::saveFile(char *pFileName, char *pData)
 /**
  * @brief This function loads the selected file.
  * 
- * @param pFileName name of the file
- * @return char* loaded data
+ * @param pFileName name of the file (max length MAX_LENGTH_NAME)
+ * @param pBuffer pointer to the buffer where the data should be loaded
+ * @param sizeBuffer size of the buffer
+ * @return MICRO_GAME_AT_ZERO_OK everything is OK
+ * @return MICRO_GAME_AT_ZERO_INIT_ERROR in the event of a hardware initialization error 
+ * @return MICRO_GAME_AT_ZERO_INVALID_PARAM invalid parameter ( e.g fileName > MAX_LENGTH_NAME, pBuff == NULL ...)
  */
-char* MICROGAMEATZERO::loadFile(char *pFileName)
+microGameAtZero_err MICROGAMEATZERO::loadFile(char *pFileName, char *pBuffer, uint32_t sizeBuffer)
 {
-   return readDataSd(pFileName);
+   return readDataSd(pFileName, pBuffer, sizeBuffer);
 }
 
 /**
@@ -186,7 +190,8 @@ microGameAtZero_err MICROGAMEATZERO::getFileList(char **ppFileName)
  * @brief This function writes data to the UART interface.
  * 
  * @param pData pointer to the data to be write
- * @return the number of transferred bytes
+ * @return the number of transferred bytes,
+ * @return MICRO_GAME_AT_ZERO_INVALID_PARAM error
  */
 microGameAtZero_err MICROGAMEATZERO::sendSerial(char* pData)
 {
