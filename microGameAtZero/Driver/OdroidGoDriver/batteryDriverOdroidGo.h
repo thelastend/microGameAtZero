@@ -5,7 +5,7 @@
 #include <esp_adc_cal.h>
 #include "../../microGameAtZeroError.h"
 
-#define MAX_SAMPLE 12
+#define MAX_SAMPLE 36
 #define MAX_VOLTAGE 4200
 #define MIN_VOLTAGE 3400
 
