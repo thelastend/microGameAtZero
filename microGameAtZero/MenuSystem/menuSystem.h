@@ -9,6 +9,7 @@
 #include "../UI/ui.h"
 #include "../Scene/scene.h"
 #include "../microGameAtZeroError.h"
+#include "../configMicroGameAtZero.h"
 #include "../Driver/microGameAtZeroTargetSettings.h"
 #include "../Audio/audioEngine.h"
 
@@ -71,6 +72,8 @@ private:
     static SCENE*    menuScene;
     static CHECKBOX* fpsCheck;
     static TEXT*     fpsText;
+    static TEXT*     versionText;
+    static TEXT*     versionNumb;
     static uint8_t   display[MAX_WIDHT_DISPLAY*MAX_HEIGHT_DISPLAY];
     static bool joyCheck;
     static bool A_BCheck;

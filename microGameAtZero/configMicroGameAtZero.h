@@ -2,7 +2,7 @@
 #define _CONFIG_MICROGAMEATZERO_
 
 
-#define VERSION 010
+#define VERSION "0.1.0"
 
 #define ENABLE  1
 #define DISABLE 0

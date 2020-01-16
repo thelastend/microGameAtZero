@@ -47,6 +47,7 @@ static uint8_t offSound[] = {
 static char buttonText[4][12] = {"System Menu","Volume","Brightness","Battery"};
 static char soundOnOffText[2][10] = {"Sound On","Sound Off"};
 static char fpsShow[] = {"Show FPS:"};
+static char version[] = {"Version: "};
 static char minus[2] = {"-"};
 static char plus[2] = {"+"};
 MENUSYSTEM* MENUSYSTEM::instance;
@@ -69,6 +70,8 @@ NUMBER*   MENUSYSTEM::volumeValue;
 TEXT*     MENUSYSTEM::brightnessText;
 NUMBER*   MENUSYSTEM::brightnessValue;
 TEXT*     MENUSYSTEM::batteryText;
+TEXT*     MENUSYSTEM::versionText;
+TEXT*     MENUSYSTEM::versionNumb;
 NUMBER*   MENUSYSTEM::batteryLevel;
 IMAGE*    MENUSYSTEM::muteOnOff;
 BUTTON*   MENUSYSTEM::soundButton;
@@ -102,7 +105,7 @@ MENUSYSTEM::MENUSYSTEM()
 
     audio = AUDIOENGINE::getInstance();
     vector2 titlePosition(110,10); 
-    vector2 textPosition(125,38); 
+    vector2 textPosition(140,38); 
     vector2 numberPosition(155,53); 
     vector2 buttonSize(16,16);
     vector2 barSize(240,16);
@@ -196,7 +199,7 @@ MENUSYSTEM::MENUSYSTEM()
     brightnessText = new TEXT(settingText);
     menuUi->addText(brightnessText); 
 
-    textPosition.set(123,118);
+    textPosition.set(131,118);
     settingText.position = textPosition;
     settingText.pText = buttonText[3];
     batteryText = new TEXT(settingText);
@@ -208,6 +211,20 @@ MENUSYSTEM::MENUSYSTEM()
     settingText.pText = fpsShow;
     fpsText = new TEXT(settingText);
     menuUi->addText(fpsText); 
+
+
+    textPosition.set(190,213);
+    settingText.position = textPosition;
+    settingText.pText = version;
+    versionText = new TEXT(settingText);
+    menuUi->addText(versionText); 
+
+
+    textPosition.set(270,213);
+    settingText.position = textPosition;
+    settingText.pText = VERSION;
+    versionNumb = new TEXT(settingText);
+    menuUi->addText(versionNumb); 
 
     //cursor
     cursorSettings.position = cursorPos;
