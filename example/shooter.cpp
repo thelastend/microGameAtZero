@@ -20,7 +20,7 @@ SHOOTER::SHOOTER()
     vector2 textPos(25,110);
     vector2 scorNumPos(200,5);
     number_ui scorSetting;
-    char *data;
+    char data[20];
 
     currentScoreCount = 0;
     highScoreCount = 0;
@@ -28,8 +28,8 @@ SHOOTER::SHOOTER()
     audio->setChannel(CHANNEL2,hit,80,sizeof(hit));
     audio->setChannel(CHANNEL4,explosion,80,sizeof(explosion));
 
-    data = game->loadFile(FILE_NAME);
-    highScoreCount = atoi(data);
+    if(game->loadFile(FILE_NAME,data,sizeof(data)) == MICRO_GAME_AT_ZERO_OK)
+        highScoreCount = atoi(data);
         
     
     explosionAnimation[0] = expl_1;
