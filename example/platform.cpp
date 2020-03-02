@@ -532,8 +532,8 @@ void setupPlatform()
     walkRight[1] = rightIdle;
     walkRight[2] = rightWalk3;
 
-    player->setAnimation(walkLeft,3,25,0xff);
-    player->setAnimation(walkRight,3,10,0xff);
+    player->setAnimation(walkLeft,3,1,0xff);
+    player->setAnimation(walkRight,3,1,0xff);
 
     settingMap.tileSize = tileSize;
     settingMap.amountTile.x = 15;

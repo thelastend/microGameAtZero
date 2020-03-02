@@ -41,7 +41,7 @@ SHOOTER::SHOOTER()
     shipImage[0] = ship;
     shipImage[1] = expl_5;
     player->setTexture(playerSize,shipImage,playerPosition,0,0xFF);
-    player->setAnimation(explosionAnimation,5,25,0xFF);
+    player->setAnimation(explosionAnimation,5,1,0xFF);
     player->setupCollisionWindow(zero,playerSize,PLAYER);
     this->addKinect(player); 
 

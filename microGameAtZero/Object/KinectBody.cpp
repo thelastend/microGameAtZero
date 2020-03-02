@@ -191,7 +191,7 @@ uint8_t* KinectBody::getTexture()
         texture = animations[animationStarted].ppTexture[animationPosition];
             
         animationRunCounter++;
-        if(animationRunCounter % animations[animationStarted].changeRate) 
+        if(animationRunCounter >= animations[animationStarted].changeRate) 
 		{ 
             animationPosition++;
             animationRunCounter = 0;

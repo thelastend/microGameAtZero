@@ -9,9 +9,9 @@
  * 
  */
 struct settingsEngine {
-    uint16_t screenX = 0;
-    uint16_t screenY = 0;
-    uint8_t maxFps = 0;
+    uint16_t screenX = 320;
+    uint16_t screenY = 240;
+    uint8_t maxFps = 20;
 };
 
 
