@@ -514,8 +514,6 @@ void setupPlatform()
     camSettings.objectToCamera = player;
     camSettings.notFollowAreaRect.x = 50;
     camSettings.notFollowAreaRect.y = 50;
-    camSettings.viewSize.x = 240;
-    camSettings.viewSize.y = 240;
     camSettings.position = camPosition;
     camSettings.mapeSize.x = 480;
     camSettings.mapeSize.y = 512;   

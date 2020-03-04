@@ -31,8 +31,13 @@ public:
         }
         return instance;
     }
+    static RENDERING2D* getInstance()
+    {
+        return instance;
+    }
     ~RENDERING2D();
 	void renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS, bool systemMenu, uint32_t deltaT);
+    void getScreenSize(int16_t *x, int16_t *y);
 
 private:
     RENDERING2D(uint16_t x, uint16_t y);

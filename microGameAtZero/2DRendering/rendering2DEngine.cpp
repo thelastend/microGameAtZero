@@ -703,3 +703,20 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
 
     }
 }
+
+
+
+
+
+/**
+ * @brief This function gets the x and y screen size.     
+ * 
+ * @param *x   pointer to write the x size
+ * @param *y   pointer to write the y size
+
+ */
+void RENDERING2D::getScreenSize( int16_t *x, int16_t *y)
+{
+    *x = xPixelSizeScreen;
+    *y = yPixelSizeScreen;
+}

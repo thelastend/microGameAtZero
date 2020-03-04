@@ -13,6 +13,7 @@
 
 
 
+
 /**
  * @brief Camera structure
  * 
@@ -21,7 +22,6 @@ struct camera_s {
     bool cameraOn = false;
     KinectBody *objectToCamera = NULL;
     vector2 notFollowAreaRect;
-    vector2    viewSize;
     vector2 position;
     vector2 mapeSize;
     vector2 tileSize;
@@ -64,6 +64,7 @@ public:
 
     
 private:
+    vector2  viewSize;
     camera_s camSettings;
     scroll_s scrollSettings;
     cameraAreaRect areaFollowRect;

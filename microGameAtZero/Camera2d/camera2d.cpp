@@ -2,7 +2,7 @@
 //  see: https://www.gnu.org/licenses/gpl-3.0.en.html and https://www.fsf.org/
 
 #include "camera2d.h"
-
+#include "../2DRendering/rendering2DEngine.h"
 
 /**
  * @brief Construct a new CAMERA2D::CAMERA2D object
@@ -51,16 +51,16 @@ scroll_s CAMERA2D::getScrollTile()
   
 
 
-        if(positionObject.position.x >= (areaFollowRect.max[0] + camSettings.position.x ) && (camSettings.position.x < (camSettings.mapeSize.x - camSettings.viewSize.x)))
+        if(positionObject.position.x >= (areaFollowRect.max[0] + camSettings.position.x ) && (camSettings.position.x < (camSettings.mapeSize.x - viewSize.x)))
         {
             diff =  positionObject.position.x - (areaFollowRect.max[0] + camSettings.position.x );
             camSettings.position.x += diff;
             scrollSettings.scrollTile = (camSettings.position.x/(camSettings.tileSize.x));
             scrollSettings.direction.x = (camSettings.position.x)% (camSettings.tileSize.x); 
         }
-        else if((camSettings.position.x > (camSettings.mapeSize.x - camSettings.viewSize.x)))
+        else if((camSettings.position.x > (camSettings.mapeSize.x - viewSize.x)))
         {
-            camSettings.position.x = (camSettings.mapeSize.x - camSettings.viewSize.x);
+            camSettings.position.x = (camSettings.mapeSize.x - viewSize.x);
             scrollSettings.scrollTile = (camSettings.position.x/(camSettings.tileSize.x));
             scrollSettings.direction.x = (camSettings.position.x)% (camSettings.tileSize.x);             
         }
@@ -79,16 +79,16 @@ scroll_s CAMERA2D::getScrollTile()
         }
 
 
-        if((positionObject.position.y >= (areaFollowRect.max[1] + camSettings.position.y )) && (camSettings.position.y < (camSettings.mapeSize.y - camSettings.viewSize.y)))
+        if((positionObject.position.y >= (areaFollowRect.max[1] + camSettings.position.y )) && (camSettings.position.y < (camSettings.mapeSize.y - viewSize.y)))
         {
             diff = positionObject.position.y - (areaFollowRect.max[1] + camSettings.position.y );
             camSettings.position.y += diff;
             scrollSettings.scrollRow = (camSettings.position.y/(camSettings.tileSize.y));
             scrollSettings.direction.y = (camSettings.position.y)% (camSettings.tileSize.y);
         }
-        else if (camSettings.position.y > (camSettings.mapeSize.y - camSettings.viewSize.y))
+        else if (camSettings.position.y > (camSettings.mapeSize.y - viewSize.y))
         {
-            camSettings.position.y = (camSettings.mapeSize.y - camSettings.viewSize.y);
+            camSettings.position.y = (camSettings.mapeSize.y - viewSize.y);
             scrollSettings.scrollRow = (camSettings.position.y/(camSettings.tileSize.y));
             scrollSettings.direction.y = (camSettings.position.y)% (camSettings.tileSize.y);
         }       
@@ -120,11 +120,14 @@ scroll_s CAMERA2D::getScrollTile()
  */
 void CAMERA2D::setCamera(camera_s settings)
 {
+    RENDERING2D *renderingEngine = RENDERING2D::getInstance();
+    renderingEngine->getScreenSize(&viewSize.x, &viewSize.y);
     camSettings  = settings;
-    areaFollowRect.max[0] = (camSettings.viewSize.x/2 + camSettings.notFollowAreaRect.x/2);
-    areaFollowRect.min[0] = (camSettings.viewSize.x/2 - camSettings.notFollowAreaRect.x/2);
-    areaFollowRect.max[1] = (camSettings.viewSize.y/2 + camSettings.notFollowAreaRect.y/2);
-    areaFollowRect.min[1] = (camSettings.viewSize.y/2 - camSettings.notFollowAreaRect.y/2);
+
+    areaFollowRect.max[0] = (viewSize.x/2 + camSettings.notFollowAreaRect.x/2);
+    areaFollowRect.min[0] = (viewSize.x/2 - camSettings.notFollowAreaRect.x/2);
+    areaFollowRect.max[1] = (viewSize.y/2 + camSettings.notFollowAreaRect.y/2);
+    areaFollowRect.min[1] = (viewSize.y/2 - camSettings.notFollowAreaRect.y/2);
     
 }
 
