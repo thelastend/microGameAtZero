@@ -165,8 +165,8 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
     UI *ui = NULL;
     vector2 camPosition;
     static bool screenSaveSize = false;
-    static bool courserShow = true;
-    static uint8_t countCourserShow = 0;
+    static bool cursorShow = true;
+    static uint8_t countCursorShow = 0;
     uint8_t backColor;
 
     
@@ -196,15 +196,15 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
                     systemMenu = true;
                 }
 
-                if(countCourserShow > (fps/2))
+                if(countCursorShow > (fps/2))
                 {
-                    countCourserShow = 0;
-                    keyBoard->showCursor(courserShow);
-                    courserShow  ^= true;
+                    countCursorShow = 0;
+                    keyBoard->showCursor(cursorShow);
+                    cursorShow  ^= true;
                 }
                 else
                 {
-                    countCourserShow++;
+                    countCursorShow++;
                 }
                 
             }
@@ -253,28 +253,31 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
         mapBack = loadedScene->getTileMap(BACKGROUND_LAYER);
         mapOB = loadedScene->getTileMap(OBJECT_LAYER);
 
-        maxTiles = mapBack.amountTile.x*mapBack.amountTile.y;
-        limitPosition = maxTiles - mapBack.amountTile.x;
-        int16_t checkPosition = limitPosition - mapBack.amountTile.x;
-        vector2 tileSize = mapBack.tileSize;
-
-        if((maxTiles == 0))
-        {
-            maxTiles = mapOB.amountTile.x*mapOB.amountTile.y;
-            limitPosition = maxTiles - mapOB.amountTile.x;
-            checkPosition = limitPosition - mapOB.amountTile.x;
-            tileSize = mapOB.tileSize;
-        }            
-
-        uint8_t pixelBack = 0;
-        uint8_t pixelObject = 0;
-        int32_t transpColorBack = -1;
-        int32_t transpColorObject = -1;
-        textureTile * textureBack = NULL;
-        textureTile * textureObject = NULL;
 
         if((mapBack.order != NULL) || (mapOB.order != NULL))
-        {        
+        { 
+
+            maxTiles = mapBack.amountTile.x*mapBack.amountTile.y;
+            limitPosition = maxTiles - mapBack.amountTile.x;
+            int16_t checkPosition = limitPosition - mapBack.amountTile.x;
+            vector2 tileSize = mapBack.tileSize;
+
+            if((maxTiles == 0))
+            {
+                maxTiles = mapOB.amountTile.x*mapOB.amountTile.y;
+                limitPosition = maxTiles - mapOB.amountTile.x;
+                checkPosition = limitPosition - mapOB.amountTile.x;
+                tileSize = mapOB.tileSize;
+            }            
+
+            uint8_t pixelBack = 0;
+            uint8_t pixelObject = 0;
+            int32_t transpColorBack = -1;
+            int32_t transpColorObject = -1;
+            textureTile * textureBack = NULL;
+            textureTile * textureObject = NULL;
+
+
             for(indexY = 0; indexY < yPixelSizeScreen; indexY++)
             {
                 countTilePixelX = scroll.direction.x;
@@ -348,6 +351,7 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
         numberOfObjects[KINECT] = loadedScene->getKinectCount();
         numberOfObjects[RIGID] = loadedScene->getRigidCount();
         numberOfObjects[STATIC] = loadedScene->getStaticCount();
+
         bool hidden = false;
 
         for(uint8_t ii = 0; ii < OBJECTS_TYPES; ii++)
@@ -367,10 +371,11 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
                     if(object != NULL)
                         loadedScene->getRigid(index)->update(deltaT);
                 }
-                else
+                else if(ii == STATIC)
                 {
                     object = loadedScene->getStatic(index);
                 }
+
                 index++;
                 if(object != NULL)
                 {
@@ -719,4 +724,16 @@ void RENDERING2D::getScreenSize( int16_t *x, int16_t *y)
 {
     *x = xPixelSizeScreen;
     *y = yPixelSizeScreen;
+}
+
+
+
+/**
+ * @brief This function set the status of the collisionWindowShow flag.   
+ * 
+ * @param show   new status
+ */
+void RENDERING2D::setShowCollisionWindow(bool show)
+{
+    collisionWindowShow = show;
 }
