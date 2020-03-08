@@ -22,41 +22,43 @@ uint32_t AUDIOENGINE::beepSize;
 void IRAM_ATTR AUDIOENGINE::playSound()
 {
     uint16_t value = 0;
-    for(uint8_t ii = 0; ii < MAX_AUDIO_CHANNELS;ii++)
+    if(!muteOn)
     {
-       if(channels[ii].playing && channels[ii].sound != nullptr)
-       {
-           value += channels[ii].sound[channels[ii].positionCount];
-           value = value*channels[ii].volumeChannel/100;
-           channels[ii].positionCount++;
-           if( (channels[ii].positionCount %  channels[ii].size)==0 )
-           {
-                channels[ii].positionCount = 4;
-                if(channels[ii].oneShot)
-                    channels[ii].playing = false;
-           }
-       }
-    }
-
-    if(beepCount)
-    {
-        value = beep[beepCount];
-        beepCount++;
-        if(beepCount == beepSize)
+        for(uint8_t ii = 0; ii < MAX_AUDIO_CHANNELS;ii++)
         {
-            setAudioSampleRate(sampleRate);
-            startAudioTimer();
-            beepCount = 0;
+            if(channels[ii].playing && channels[ii].sound != nullptr)
+            {
+                value += channels[ii].sound[channels[ii].positionCount];
+                value = value*channels[ii].volumeChannel/100;
+                channels[ii].positionCount++;
+                if( (channels[ii].positionCount %  channels[ii].size)==0 )
+                {
+                        channels[ii].positionCount = 4;
+                        if(channels[ii].oneShot)
+                            channels[ii].playing = false;
+                }
+            }
         }
+
+        if(beepCount)
+        {
+            value = beep[beepCount];
+            beepCount++;
+            if(beepCount == beepSize)
+            {
+                setAudioSampleRate(sampleRate);
+                startAudioTimer();
+                beepCount = 0;
+            }
+        }
+
+        value = value*volumeMain/100;
+
+        if(value > 255)
+            value = 255;
+
+        
     }
-
-    value = value*volumeMain/100;
-
-    if(value > 255)
-        value = 255;
-
-    if(muteOn)
-        value = 0;
     setAudioValue(value);
     
 }
