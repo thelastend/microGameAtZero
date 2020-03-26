@@ -34,7 +34,7 @@ public:
     }
     ~COREENGINE();
 	static void ATTR_RAM timerUpdate(uint32_t deltaT);
-    static void addScene(SCENE *scene);
+    static uint16_t addScene(SCENE *scene);
     static microGameAtZero_err loadScene(uint16_t position);
     static void gameLoop();
 
@@ -48,6 +48,7 @@ private:
     static std::list<SCENE*> sceneList;
     static SCENE *loadedScene;
     static SCENE *systemMenuScene;
+    static int16_t sceneCounter;
     static bool update;
     static uint8_t framePerSeconds;
     static uint8_t fpsValue;

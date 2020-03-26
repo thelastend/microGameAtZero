@@ -23,6 +23,7 @@ bool COREENGINE::soundCheck;
 bool COREENGINE::menuSysButtonPress;
 bool COREENGINE::checkMenuPress;
 bool COREENGINE::menuButtonCheck;
+int16_t COREENGINE::sceneCounter;
 
 
 
@@ -52,6 +53,7 @@ COREENGINE::COREENGINE(settingsEngine setting)
     menuSysButtonPress = false;
     checkMenuPress = true; 
     menuButtonCheck = true;
+    sceneCounter = -1;
 
 }
 
@@ -95,10 +97,14 @@ void ATTR_RAM COREENGINE::timerUpdate(uint32_t deltaT)
  * @brief This function adds a new scene to the scene list.
  * 
  * @param scene new scene
+ * 
+ * @return scene index
  */
-void COREENGINE::addScene(SCENE *scene)
+uint16_t COREENGINE::addScene(SCENE *scene)
 {
+  sceneCounter++;
   sceneList.push_back(scene);
+  return (uint16_t)sceneCounter;
 }
 
 
@@ -133,9 +139,22 @@ microGameAtZero_err COREENGINE::loadScene(uint16_t position)
 void ATTR_RAM COREENGINE::gameLoop()
 {
   static bool fpsShow = false;
+
   if(update)
   {
     framePerSeconds++;
+
+    menuButtonCheck = getInputButton(MENU);
+    if(menuButtonCheck && checkMenuPress)
+    {
+      menuSysButtonPress = !menuSysButtonPress;
+      checkMenuPress = false;
+    }
+    else if(!menuButtonCheck)
+    {
+      checkMenuPress = true;
+    }
+
     if(!menuSysButtonPress)
     {
       loadedScene->sceneLogic(dT);
@@ -148,16 +167,6 @@ void ATTR_RAM COREENGINE::gameLoop()
       renderingEngine->renderingScreen(systemMenuScene,fpsValue,fpsShow,true,dT);
     }
     update = false;
-    menuButtonCheck = getInputButton(MENU);
-    if(menuButtonCheck && checkMenuPress)
-    {
-      menuSysButtonPress = !menuSysButtonPress;
-      checkMenuPress = false;
-    }
-    else if(!menuButtonCheck)
-    {
-      checkMenuPress = true;
-    }
     
     soundCheck = getInputButton(VOLUME);
     if(soundCheck && soundNotPress)
@@ -180,7 +189,6 @@ void ATTR_RAM COREENGINE::gameLoop()
     }
     
     dT = 0;
-
   }
 }
 
