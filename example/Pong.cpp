@@ -184,8 +184,8 @@ void setupPong()
     ballList[0] = ballImg;
 
     vector2 zero(0,0);
-    playOne->setTexture(pandlSize,pandlImgList,pandlPosOne,0,0x00);
-    playTwo->setTexture(pandlSize,pandlImgList,pandlPosTwo,0,0x00);
+    playOne->setSprite(pandlSize,pandlImgList,pandlPosOne,0,0x00);
+    playTwo->setSprite(pandlSize,pandlImgList,pandlPosTwo,0,0x00);
     playOne->setupCollisionWindow(zero,pandlSize,(collisionType )GROUND_AND_WALL);
     playTwo->setupCollisionWindow(zero,pandlSize,(collisionType )GROUND_AND_WALL);
 
@@ -193,7 +193,7 @@ void setupPong()
     vector2 posBall(50,50);
     vector2 sizeBall(3,3);
 
-    ball->setTexture(sizeBall,ballList,posBall,5,0);
+    ball->setSprite(sizeBall,ballList,posBall,5,0);
     ball->setupCollisionWindow(zero,sizeBall,(collisionType )GROUND_AND_WALL);
     physicParam ballPhysic;
     posBall.y = 100;

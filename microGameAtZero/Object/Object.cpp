@@ -11,7 +11,7 @@
  */
 Object::Object()
 {
-	showTexture = 0;
+	showSprite = 0;
 	objectNumb = 0;
 }
 
@@ -65,11 +65,11 @@ objectSettings Object::getValues()
 
 
 /**
- * @brief This function returns the texture (is a virtual function, see the derived classes)
+ * @brief This function returns the sprite (is a virtual function, see the derived classes)
  * 
  * @return NULL
  */
-uint8_t *Object::getTexture()
+uint8_t *Object::getSprite()
 {
 	return NULL;
 }
@@ -109,13 +109,13 @@ bool Object::getHidden()
 
 
 /**
- * @brief This function set which texture should  be displayed
+ * @brief This function set which sprite should  be displayed
  * 
- * @param set index of the texture that should be shown
+ * @param set index of the sprite that should be shown
  */
-void Object::setShowTexture(uint8_t set)
+void Object::setShowSprite(uint8_t set)
 {
-	showTexture = set;
+	showSprite = set;
 }
 
 

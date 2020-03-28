@@ -12,7 +12,7 @@
 UI::UI()
 {
     uint8_t index = 0;
-    cursor.textureCursor = NULL;
+    cursor.spriteCursor = NULL;
     for(index = 0; index < MAX_BUTTONS;index++)
     {
         buttonList[index] = NULL;
@@ -59,7 +59,7 @@ UI::UI()
 UI::~UI()
 {
     uint8_t index = 0;
-    cursor.textureCursor = NULL;
+    cursor.spriteCursor = NULL;
     for(index = 0; index < MAX_BUTTONS;index++)
     {
         buttonList[index]->~BUTTON();
@@ -89,7 +89,7 @@ UI::~UI()
         checkboxList[index]->~CHECKBOX();
         checkboxList[index] = NULL;
     }
-    cursor.textureCursor = NULL;
+    cursor.spriteCursor = NULL;
 
 }
 
@@ -344,21 +344,21 @@ microGameAtZero_err UI::setHiddenImage(uint8_t numberImgae, bool hidden)
 
 
 /**
- * @brief This function sets a new texture to the selected image.
+ * @brief This function sets a new sprite to the selected image.
  * 
  * @param numbImage index of the selected image object
- * @param pTexture pointer to the new texture
+ * @param pSprite pointer to the new sprite
  * @return MICRO_GAME_AT_ZERO_OK everything is ok
  * @return MICRO_GAME_AT_ZERO_INVALID_PARAM no more space or invalide parameter 
  */
-microGameAtZero_err UI::modifyImage(uint8_t numbImage, uint8_t *pTexture)
+microGameAtZero_err UI::modifyImage(uint8_t numbImage, uint8_t *pSprite)
 {
     microGameAtZero_err error = MICRO_GAME_AT_ZERO_INVALID_PARAM;
-    if((numbImage < MAX_BUTTONS) && (pTexture != NULL))
+    if((numbImage < MAX_BUTTONS) && (pSprite != NULL))
     {
         if(imageList[numbImage] != NULL)
         {    
-            imageList[numbImage]->changeImage(pTexture);
+            imageList[numbImage]->changeImage(pSprite);
             error = MICRO_GAME_AT_ZERO_OK;
         }
     }

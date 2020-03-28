@@ -13,13 +13,13 @@ class RigidBody : public Object {
 public: 
     RigidBody();
 	~RigidBody();
-	void setTexture(vector2 size, uint8_t **image, vector2 position, int8_t mass, int32_t transparentColor);
-	virtual uint8_t *getTexture();
+	void setSprite(vector2 size, uint8_t **image, vector2 position, int8_t mass, int32_t transparentColor);
+	virtual uint8_t *getSprite();
 	void update(uint32_t deltaTime);
 	void setBreak(bool set);
 	int32_t getTransparentColor();
 private:
-	texture bodyTexture;
+	sprite bodySprite;
 	bool breakUpdate;
 };
 

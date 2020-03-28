@@ -59,12 +59,12 @@ struct objectSettings
 
 
 /**
- * @brief structure of the texture settings
+ * @brief structure of the sprite settings
  * 
  */
-struct texture
+struct sprite
 {
-	uint8_t **ppTexture;	
+	uint8_t **ppSprite;	
 	int32_t transparentColor = -1;
 };
 
@@ -80,7 +80,7 @@ public:
 	~Object();
 	void setupCollisionWindow(vector2 position, vector2 size, collisionType setCollisionType = GROUND_AND_WALL);
 	collisionSettings getCollisionWindow();
-	virtual uint8_t *getTexture();
+	virtual uint8_t *getSprite();
 	virtual int32_t getTransparentColor();
 	objectSettings getValues();	
 	void setHidden(bool set);
@@ -89,7 +89,7 @@ public:
 	physicParam getPhysic();
 	void setVelocity(vector2 vel);
 	void setGravity(int8_t grav);
-	void setShowTexture(uint8_t set);
+	void setShowSprite(uint8_t set);
 	uint16_t getObjectNumb();
 	void setObjectNumb(uint16_t numb);
 	void setPosition(vector2 position);
@@ -97,7 +97,7 @@ public:
 protected:
 	collisionSettings collision;
 	objectSettings settings;
-	uint8_t showTexture;
+	uint8_t showSprite;
 	bool hidden;
 	physicParam physicSettings;
 	uint16_t objectNumb;

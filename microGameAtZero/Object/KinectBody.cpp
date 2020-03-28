@@ -10,14 +10,14 @@
  */
 KinectBody::KinectBody()
 {
-	bodyTexture.ppTexture = NULL;
+	bodySprite.ppSprite = NULL;
 	animationExistCount = 0;
 	animationStarted = -1;
-	showTexture = 0;
+	showSprite = 0;
 	fps = 20;
 	for(uint8_t ii = 0; ii < MAXANIMATIONS; ii++)
 	{
-		animations[ii].ppTexture = NULL;
+		animations[ii].ppSprite = NULL;
 		animations[ii].inUse = false;
 	}
 	hidden = false;
@@ -30,31 +30,31 @@ KinectBody::KinectBody()
  */
 KinectBody::~KinectBody()
 {
-	bodyTexture.ppTexture = NULL;
+	bodySprite.ppSprite = NULL;
 	for(uint8_t ii = 0; ii < MAXANIMATIONS; ii++)
 	{
-		animations[ii].ppTexture = NULL;
+		animations[ii].ppSprite = NULL;
 	}
 }
 
 
 /**
- * @brief This function sets the settings of the object with texture, size and position.
+ * @brief This function sets the settings of the object with sprite, size and position.
  * 
- * @param size size of the object (texture size == object size)
- * @param ppTexture pointer to the texture array (all textures in the array must have the same size)
+ * @param size size of the object (sprite size == object size)
+ * @param ppSprite pointer to the sprite array (all sprites in the array must have the same size)
  * @param position start position of the object
  * @param mass mass of the object
- * @param transparentColor color that should not be rendered (the transparent color of all texture in the array must be the same)
+ * @param transparentColor color that should not be rendered (the transparent color of all sprite in the array must be the same)
  */
-void KinectBody::setTexture(vector2 size, uint8_t **ppTexture, vector2 position, int8_t mass, int32_t transparentColor)
+void KinectBody::setSprite(vector2 size, uint8_t **ppSprite, vector2 position, int8_t mass, int32_t transparentColor)
 {
 	settings.position = position;
 	settings.size = size;
 	settings.mass = mass;
-	bodyTexture.ppTexture = ppTexture;
+	bodySprite.ppSprite = ppSprite;
 	if( transparentColor >= -1 && transparentColor <= 0xff)
-		bodyTexture.transparentColor = transparentColor;	
+		bodySprite.transparentColor = transparentColor;	
 }
 
 /**
@@ -78,15 +78,15 @@ vector2 KinectBody::move(vector2 update)
 /**
  * @brief This function adds a new animation to the object.
  * 
- * @param ppTexture list of animation textures
- * @param numbTextures how many textures the animation has
+ * @param ppSprite list of animation sprites
+ * @param numbSprites how many sprites the animation has
  * @param changeRate how fast the animation should be played
  * @param transparentColor color that should not be rendered (8-bit ture color)
  * @return >= 0 index of the animation
  * @return MICRO_GAME_AT_ZERO_INVALID_PARAM invalid parameter
  * @return MICRO_GAME_AT_ZERO_FULL_ERROR no more room for a new animation
  */
-microGameAtZero_err KinectBody::setAnimation(uint8_t **ppTexture, uint8_t numbTextures, uint8_t changeRate,  int32_t transparentColor)
+microGameAtZero_err KinectBody::setAnimation(uint8_t **ppSprite, uint8_t numbSprites, uint8_t changeRate,  int32_t transparentColor)
 {
 	microGameAtZero_err set = MICRO_GAME_AT_ZERO_INVALID_PARAM;
 
@@ -96,8 +96,8 @@ microGameAtZero_err KinectBody::setAnimation(uint8_t **ppTexture, uint8_t numbTe
 		{
 			if(!animations[index].inUse)
 			{
-				animations[index].ppTexture = ppTexture;
-				animations[index].numbTextures = numbTextures;
+				animations[index].ppSprite = ppSprite;
+				animations[index].numbSprites = numbSprites;
 				animations[index].changeRate = changeRate;
 				animations[index].transparentColor = transparentColor;
 				animations[index].inUse = true;
@@ -178,17 +178,17 @@ int8_t KinectBody::animationStatus()
 
 
 /**
- * @brief This function returns the texture to be displayed.
+ * @brief This function returns the sprite to be displayed.
  * 
- * @return uint8_t* pointer to the texture
+ * @return uint8_t* pointer to the sprite
  */
-uint8_t* KinectBody::getTexture()
+uint8_t* KinectBody::getSprite()
 {
-    uint8_t *texture = bodyTexture.ppTexture[showTexture];
+    uint8_t *sprite = bodySprite.ppSprite[showSprite];
 
     if(animationStarted > NO_ANIMATION_STARDED)
     {        
-        texture = animations[animationStarted].ppTexture[animationPosition];
+        sprite = animations[animationStarted].ppSprite[animationPosition];
             
         animationRunCounter++;
         if(animationRunCounter >= animations[animationStarted].changeRate) 
@@ -196,7 +196,7 @@ uint8_t* KinectBody::getTexture()
             animationPosition++;
             animationRunCounter = 0;
 		}   
-        if(animationPosition >= animations[animationStarted].numbTextures)
+        if(animationPosition >= animations[animationStarted].numbSprites)
         {
             animationPosition = 0;
 			if(animations[animationStarted].oneShot)
@@ -204,18 +204,18 @@ uint8_t* KinectBody::getTexture()
         }
     }
 
-    return texture;
+    return sprite;
 }
 
 
 /**
- * @brief This function returns the transparent color of the current texture.
+ * @brief This function returns the transparent color of the current sprite.
  * 
  * @return transparent color value
  */
 int32_t KinectBody::getTransparentColor()
 {
-	int32_t transparent = bodyTexture.transparentColor;
+	int32_t transparent = bodySprite.transparentColor;
 	
 	if(animationStarted > -1)
     {
@@ -240,10 +240,10 @@ microGameAtZero_err KinectBody::removeAnimation(uint8_t animationNumber)
 	{
 		if(animations[animationNumber].inUse)
 		{
-			animations[animationNumber].numbTextures = 0;
+			animations[animationNumber].numbSprites = 0;
 			animations[animationNumber].changeRate = 0;
 			animations[animationNumber].transparentColor = -1;
-			animations[animationNumber].ppTexture  = NULL;
+			animations[animationNumber].ppSprite = NULL;
 			animations[animationNumber].inUse = false;
 			animationExistCount--;
 			remove = MICRO_GAME_AT_ZERO_OK;

@@ -40,7 +40,7 @@ SHOOTER::SHOOTER()
 
     shipImage[0] = ship;
     shipImage[1] = expl_5;
-    player->setTexture(playerSize,shipImage,playerPosition,0,0xFF);
+    player->setSprite(playerSize,shipImage,playerPosition,0,0xFF);
     player->setAnimation(explosionAnimation,5,1,0xFF);
     player->setupCollisionWindow(zero,playerSize,PLAYER);
     this->addKinect(player); 
@@ -59,7 +59,7 @@ SHOOTER::SHOOTER()
     }
 
     lifeSetting.size = lifeSize;
-    lifeSetting.pTexture = life;
+    lifeSetting.pSprite = life;
     lifeSetting.transparentColor = 0xff;
     for(uint8_t index = 0; index < MAX_LIFE; index++)
     {
@@ -151,7 +151,7 @@ void SHOOTER::newAstroids()
             astroid[index] = NULL;
         }
         astroid[index] = new RigidBody();
-        astroid[index]->setTexture(astroSize,astroidImage,astroPosition,10,0xff);
+        astroid[index]->setSprite(astroSize,astroidImage,astroPosition,10,0xff);
         astroid[index]->setupCollisionWindow(zero,astroSize,(collisionType)(ENEMEY | PLAYER));
         astroPosition.x += 40;
         astroid[index]->setPhysic(astroidPhysic);
@@ -276,7 +276,7 @@ void SHOOTER::sceneLogic(uint32_t deltaT)
                     bulletPosition.x += 14;
 
                     bullets[index] = new RigidBody();
-                    bullets[index]->setTexture(sizeBullet,bulletImage,bulletPosition,0,0xFF);
+                    bullets[index]->setSprite(sizeBullet,bulletImage,bulletPosition,0,0xFF);
                     bullets[index]->setupCollisionWindow(zero,sizeBullet,ENEMEY);
                     physicParam bulletPhysic;
                     bulletPhysic.velocity = vel;
@@ -319,7 +319,7 @@ void SHOOTER::sceneLogic(uint32_t deltaT)
         
         if(player->animationStatus() == -1)
         {
-            player->setShowTexture(1);
+            player->setShowSprite(1);
         }
         
         if(currentScoreCount > highScoreCount)
@@ -356,7 +356,7 @@ void SHOOTER::sceneLogic(uint32_t deltaT)
         if(game->getButton(SELECT))
         {
             player->stopAnimation();
-            player->setShowTexture(0);
+            player->setShowSprite(0);
             newAstroids();
             currentScoreCount = 0;
             currentScore->changeNumber(currentScoreCount);

@@ -230,7 +230,6 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
         if(camera2D != NULL )
         {
            cameraStatus = camera2D->getCameraStatus();
-
         }
 
         for(uint16_t ii = 0; ii < yPixelSizeScreen;ii++)
@@ -274,8 +273,8 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
             uint8_t pixelObject = 0;
             int32_t transpColorBack = -1;
             int32_t transpColorObject = -1;
-            textureTile * textureBack = NULL;
-            textureTile * textureObject = NULL;
+            spriteTile * spriteBack = NULL;
+            spriteTile * spriteObject = NULL;
 
 
             for(indexY = 0; indexY < yPixelSizeScreen; indexY++)
@@ -318,16 +317,16 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
 
                         if(textNum != NO_TILE_USEDED)
                         {
-                            textureBack = loadedScene->getTexture(textNum);
-                            pixelBack = textureBack->texture[countTilePixelX + (tileSize.x*countTilePixelY)];
-                            transpColorBack = textureBack->transparentColor;
+                            spriteBack = loadedScene->getSprite(textNum);
+                            pixelBack = spriteBack->sprite[countTilePixelX + (tileSize.x*countTilePixelY)];
+                            transpColorBack = spriteBack->transparentColor;
                         }
                         
                         if(objectLayerNum != NO_TILE_USEDED)
                         {
-                            textureObject = loadedScene->getTexture(objectLayerNum);
-                            pixelObject = textureObject->texture[countTilePixelX + (tileSize.x*countTilePixelY)];
-                            transpColorObject = textureObject->transparentColor;                            
+                            spriteObject = loadedScene->getSprite(objectLayerNum);
+                            pixelObject = spriteObject->sprite[countTilePixelX + (tileSize.x*countTilePixelY)];
+                            transpColorObject = spriteObject->transparentColor;                            
                         }
 
                         if((transpColorObject != pixelObject) && (objectLayerNum != NO_TILE_USEDED))
@@ -381,7 +380,7 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
                 {
                     objectIndex++;
                     int32_t transparentColor = object->getTransparentColor();
-                    uint8_t * texture = object->getTexture();
+                    uint8_t * sprite = object->getSprite();
                     uint8_t pixel = 0;
                     objectSettings values = object->getValues();
                     hidden = object->getHidden();
@@ -409,7 +408,7 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
                             {
                                 for(uint16_t width = 0; width < values.size.x; width++)
                                 {
-                                    pixel = texture[width +(values.size.x*height)];
+                                    pixel = sprite[width +(values.size.x*height)];
 
                                     x = xPosition+width;
                                     y = yPosition+height;
@@ -508,7 +507,7 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
                     vector2 end;
                     end.x = settings.position.x+settings.size.x;
                     end.y = settings.position.y+settings.size.y; 
-                    if(settings.pTexture != NULL && !settings.hidden)
+                    if(settings.pSprite != NULL && !settings.hidden)
                     {
                         for(uint16_t height = settings.position.y; height < end.y; height++)
                         {
@@ -516,7 +515,7 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
                             for(uint16_t width = settings.position.x; width < end.x; width++)
                             {   
                                 uint16_t x = width - settings.position.x;
-                                pixel = settings.pTexture[x +(settings.size.x*y)];
+                                pixel = settings.pSprite[x +(settings.size.x*y)];
                                 if(settings.transparentColor != pixel && (width < xPixelSizeScreen)
                                     && (height < yPixelSizeScreen))
                                 {
@@ -640,9 +639,9 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
                 uint8_t set = 0;
                 bool draw = false;
                 bool imageCursor = false;
-                if(cursor.textureCursor != NULL)
+                if(cursor.spriteCursor != NULL)
                 {
-                    end = cursor.sizeTexture;
+                    end = cursor.sizeSprite;
                     end.x += cursor.position.x;
                     end.y += cursor.position.y;
                     imageCursor = true;
@@ -668,7 +667,7 @@ void RENDERING2D::renderingScreen(SCENE* loadedScene, uint8_t fps, bool showFPS,
                         if(imageCursor)
                         {
                             uint16_t x = xIndex - cursor.position.x;                       
-                            set = cursor.textureCursor[x +(cursor.sizeTexture.x*ySet)];
+                            set = cursor.spriteCursor[x +(cursor.sizeSprite.x*ySet)];
                             if(set != cursor.transparentColor)
                             {
                                 draw = true;

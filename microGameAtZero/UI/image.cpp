@@ -21,23 +21,23 @@ IMAGE::IMAGE(image_ui setting)
  */
 IMAGE::~IMAGE()
 {
-    imageSetting.pTexture = NULL;
+    imageSetting.pSprite = NULL;
 }
 
 
 /**
- * @brief This function changes the texture of the image object.
+ * @brief This function changes the Sprite of the image object.
  * 
- * @param texture texture to be set
+ * @param pSprite  pointer to the sprite to be set
  * @return MICRO_GAME_AT_ZERO_OK everything is ok
- * @return MICRO_GAME_AT_ZERO_INVALID_PARAM pTexture is NULL
+ * @return MICRO_GAME_AT_ZERO_INVALID_PARAM pSprite is NULL
  */
-microGameAtZero_err IMAGE::changeImage(uint8_t *pTexture)
+microGameAtZero_err IMAGE::changeImage(uint8_t *pSprite)
 {
     microGameAtZero_err error = MICRO_GAME_AT_ZERO_INVALID_PARAM;
-    if(pTexture != NULL)
+    if(pSprite != NULL)
     {
-        imageSetting.pTexture = pTexture;
+        imageSetting.pSprite = pSprite;
         error = MICRO_GAME_AT_ZERO_OK;
     }
 

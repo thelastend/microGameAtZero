@@ -298,7 +298,7 @@ MENUSYSTEM::MENUSYSTEM()
     settingImage.hidden = false;
     settingImage.position = imagePos;
     settingImage.size = imageSize;
-    settingImage.pTexture = onSound;
+    settingImage.pSprite = onSound;
 
     muteOnOff = new IMAGE(settingImage);
     menuUi->addImage(muteOnOff);

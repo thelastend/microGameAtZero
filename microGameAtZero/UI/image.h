@@ -16,7 +16,7 @@
  */
 struct image_ui {
     bool hidden = false;
-    uint8_t *pTexture;
+    uint8_t *pSprite;
     int32_t transparentColor = -1;
     vector2 size;
     vector2 position;
@@ -32,7 +32,7 @@ class IMAGE {
 public: 
     IMAGE(image_ui setting);
     ~IMAGE();
-    microGameAtZero_err changeImage(uint8_t *pTexture);
+    microGameAtZero_err changeImage(uint8_t *pSprite);
     image_ui getImageSettings();
     void setHidden(bool hidden);
     bool getHidden();

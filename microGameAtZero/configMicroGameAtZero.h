@@ -27,7 +27,7 @@
 #define MAX_DIF_KINECT     70
 #define MAX_DIF_RIGID      70
 #define MAX_DIF_AREA       70
-#define MAX_TEXTURES       70
+#define MAX_SPRITES        70
 #define MAX_BUTTONS        70
 #define MAX_BUTTON_TEXT    70
 #define MAX_UI_IMAGES      70

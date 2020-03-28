@@ -29,9 +29,9 @@ SCENE::SCENE()
    {
        rigidList[index] = NULL;
    }
-   for(index = 0; index < MAX_TEXTURES;index++)
+   for(index = 0; index < MAX_SPRITES;index++)
    {
-       textureList[index].texture = NULL;
+       spriteList[index].sprite = NULL;
    }
    for(index = 0; index < MAX_DIF_AREA;index++)
    {
@@ -42,7 +42,7 @@ SCENE::SCENE()
    staticCounter = 0;
    rigidCounter = 0;
    kinectCounter = 0;
-   textureCounter = 0;
+   spriteCounter = 0;
    areaCounter = 0;
    camera2d = NULL;
    uiSettings = NULL;
@@ -74,9 +74,9 @@ SCENE::~SCENE()
        rigidList[index]->~RigidBody();
        rigidList[index] = NULL;
    }
-   for(index = 0; index < MAX_TEXTURES;index++)
+   for(index = 0; index < MAX_SPRITES;index++)
    {
-       textureList[index].texture = NULL;
+       spriteList[index].sprite = NULL;
    }
    for(index = 0; index < MAX_DIF_AREA;index++)
    {
@@ -266,32 +266,32 @@ uint16_t SCENE::getStaticCount()
 
 
 /**
- * @brief This function adds a texture tile to the scene.
+ * @brief This function adds a sprite tile to the scene.
  * 
- * @param pTexture pointer to the texture to be add
+ * @param pSprite pointer to the sprite to be add
  * @param transparentColor color that should not be rendered (8-bit ture color)
- * @param wallOrGround if true then the collision type GROUND_AND_WALL is set for this texture 
- *                     (collision window size == texture size)
- * @return position of the texture in the array (identification number).
+ * @param wallOrGround if true then the collision type GROUND_AND_WALL is set for this Sprite 
+ *                     (collision window size == sprite size)
+ * @return position of the Sprite in the array (identification number).
  * @return MICRO_GAME_AT_ZERO_INVALID_PARAM invalid parameter
  */
-microGameAtZero_err SCENE::addTexture(uint8_t *pTexture, int32_t transparentColor, bool wallOrGround)
+microGameAtZero_err SCENE::addSprite(uint8_t *pSprite, int32_t transparentColor, bool wallOrGround)
 {
     microGameAtZero_err error = MICRO_GAME_AT_ZERO_INVALID_PARAM;
     
-    if(pTexture != NULL)
+    if(pSprite != NULL)
     {
-        if(textureCounter < MAX_TEXTURES)
+        if(spriteCounter < MAX_SPRITES)
         {
-            textureList[textureCounter].texture = pTexture;
-            textureList[textureCounter].transparentColor = transparentColor;
+            spriteList[spriteCounter].sprite = pSprite;
+            spriteList[spriteCounter].transparentColor = transparentColor;
             if(wallOrGround)
-                textureList[textureCounter].collision = GROUND_AND_WALL;
+                spriteList[spriteCounter].collision = GROUND_AND_WALL;
             else
-                textureList[textureCounter].collision = COLLISION_OFF;
+                spriteList[spriteCounter].collision = COLLISION_OFF;
 
-            error = textureCounter;   
-            textureCounter++;
+            error = spriteCounter;   
+            spriteCounter++;
         }
     }
     
@@ -300,17 +300,17 @@ microGameAtZero_err SCENE::addTexture(uint8_t *pTexture, int32_t transparentColo
 
 
 /**
- * @brief This function returns the texture tile on the passed index.
+ * @brief This function returns the sprite tile on the passed index.
  * 
- * @param numbTexture position of the texture in the array  (identification number)
- * @return textureTile* structure  of the texture tile on the passed position is no texture tile on this
+ * @param numbSprite position of the sprite in the array  (identification number)
+ * @return spriteTile* structure  of the sprite tile on the passed position is no sprite tile on this
  *         position a NULL is returned.
  */
-textureTile* ATTR_RAM SCENE::getTexture(uint16_t numbTexture)
+spriteTile* ATTR_RAM SCENE::getSprite(uint16_t numbSprite)
 {
-    if(numbTexture < textureCounter)
+    if(numbSprite < spriteCounter)
     {
-        return &textureList[numbTexture];
+        return &spriteList[numbSprite];
     }
     else
     {
@@ -384,7 +384,7 @@ microGameAtZero_err SCENE::removeKinect(KinectBody *pObj)
 /**
  * @brief This function returns the Kinect body on the passed index.
  * 
- * @param numbTexture position of the Kinect body in the array (identification number).
+ * @param numbObjects position of the Kinect body in the array (identification number).
  * @return KinectBody* Kinect body on the passed position, if no Kinect body on this
  *         position a NULL is returned.
  */
@@ -476,7 +476,7 @@ microGameAtZero_err SCENE::removeRigid(RigidBody *pObj)
 /**
  * @brief This function returns the rigid body on the passed index.
  * 
- * @param numbTexture position of the rigid body in the array (identification number).
+ * @param numbObjects position of the rigid body in the array (identification number).
  * @return RigidBody* rigid body on the passed position, if no rigid body on this
  *         position a NULL is returned.
  */
@@ -570,7 +570,7 @@ microGameAtZero_err SCENE::removeArea(AREA *pObj)
 /**
  * @brief This function returns the area on the passed index.
  * 
- * @param numbTexture position of the area in the array (identification number).
+ * @param numbObjects position of the area in the array (identification number).
  * @return RigidBody* area on the passed position, if no area on this
  *         position a NULL is returned.
  */
@@ -688,7 +688,7 @@ vector2 SCENE::moveCollisionWallGround(KinectBody *pObject,vector2 positionUpdat
     uint16_t maxTiles = map.amountTile.x*map.amountTile.y;
     collisionSettings collisionWindowObject = pObject->getCollisionWindow();
     collisionSettings collisionWindowTile;
-    textureTile *tile;
+    spriteTile *tile;
     int16_t tileNumber;
     vector2 zone;
     vector2 collisionUpdate;
@@ -730,7 +730,7 @@ vector2 SCENE::moveCollisionWallGround(KinectBody *pObject,vector2 positionUpdat
             uint8_t tileInList = map.order[tileNumber];
             if(NO_TILE_USEDED != tileInList)
             {
-                tile = &textureList[tileInList];
+                tile = &spriteList[tileInList];
             }
             if(tile != NULL)
             {

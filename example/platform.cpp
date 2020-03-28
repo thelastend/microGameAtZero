@@ -436,7 +436,7 @@ void LEVELPL::sceneLogic(uint32_t deltaT)
 
       }
       player->startAnimation(0, false);
-      player->setShowTexture(1);
+      player->setShowSprite(1);
     }
     else if(gamePl->getJoyPad(RIGHT))
     {
@@ -445,7 +445,7 @@ void LEVELPL::sceneLogic(uint32_t deltaT)
         position.x =4;
       }
       player->startAnimation(1, false);
-      player->setShowTexture(0);
+      player->setShowSprite(0);
     }
     else
     {
@@ -503,7 +503,7 @@ void setupPlatform()
     idle[0] = rightIdle;
     idle[1] = leftIdel;
 
-    player->setTexture(playerSize,idle,playerPos,0,0xff);
+    player->setSprite(playerSize,idle,playerPos,0,0xff);
     player->setupCollisionWindow(zero,playerCol,(collisionType )GROUND_AND_WALL);
 
 
@@ -538,8 +538,8 @@ void setupPlatform()
     settingMap.amountTile.y = 16;
     settingMap.order = objectOrder;
 
-    platform->addTexture(grass,-1,true);
-    platform->addTexture(dirt,-1,false);
+    platform->addSprite(grass,-1,true);
+    platform->addSprite(dirt,-1,false);
     platform->setTileMap(settingMap,OBJECT_LAYER);
 
     settingMap.order = backgroundOrder;

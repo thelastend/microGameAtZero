@@ -54,11 +54,11 @@ enum sceneLayer_t {
 
 
 /**
- * @brief structure of the texture tile settings
+ * @brief structure of the sprite tile settings
  * 
  */
-struct textureTile {
-    uint8_t *texture;
+struct spriteTile {
+    uint8_t *sprite;
     int32_t transparentColor = -1;
     collisionType collision;
 };
@@ -83,8 +83,8 @@ public:
     StaticBody* getStatic(uint16_t numbObjects);
     uint16_t getStaticCount();
 
-    microGameAtZero_err addTexture(uint8_t *pTexture, int32_t transparentColor, bool wallOrGround);
-    textureTile* getTexture(uint16_t numbTexture);
+    microGameAtZero_err addSprite(uint8_t *pSprite, int32_t transparentColor, bool wallOrGround);
+    spriteTile* getSprite(uint16_t numbSprite);
    
     microGameAtZero_err addKinect(KinectBody *pObj);
     microGameAtZero_err removeKinect(KinectBody *pObj);
@@ -117,8 +117,8 @@ private:
     KinectBody *kinectList[MAX_DIF_KINECT];
     RigidBody *rigidList[MAX_DIF_RIGID];
     AREA *areaList[MAX_DIF_AREA];
-    textureTile textureList[MAX_TEXTURES];
-    uint16_t textureCounter;
+    spriteTile spriteList[MAX_SPRITES];
+    uint16_t spriteCounter;
     uint16_t staticCounter;
     uint16_t kinectCounter;
     uint16_t rigidCounter;

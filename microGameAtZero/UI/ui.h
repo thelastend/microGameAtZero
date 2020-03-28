@@ -23,8 +23,8 @@
 struct cursor_ui {
     bool hidden = true;
     vector2 position;
-    uint8_t *textureCursor = NULL;
-    vector2 sizeTexture;
+    uint8_t *spriteCursor = NULL;
+    vector2 sizeSprite;
     int32_t transparentColor = -1;
     char textCursor = 0;
     uint8_t fontColor = 0xff;
@@ -55,7 +55,7 @@ public:
     
     microGameAtZero_err addImage(IMAGE *pImage);
     microGameAtZero_err setHiddenImage(uint8_t numberImgae, bool hidden);
-    microGameAtZero_err modifyImage(uint8_t numbImage, uint8_t *pTexture);
+    microGameAtZero_err modifyImage(uint8_t numbImage, uint8_t *pSprite);
     microGameAtZero_err removeImage(uint8_t imageNumber);
     IMAGE * getImage(uint8_t imageNumber);
     uint8_t getImageAmount();
