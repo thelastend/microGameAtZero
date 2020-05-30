@@ -99,8 +99,7 @@ microGameAtZero_err MICROGAMEATZERO::loadScene(uint16_t position)
 void MICROGAMEATZERO::startGame()
 {
    timer->startUp();
-   while(1)
-      core->gameLoop();
+   core->gameLoop();
 }
 
 

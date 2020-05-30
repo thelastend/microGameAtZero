@@ -51,7 +51,7 @@ COREENGINE::COREENGINE(settingsEngine setting)
     initBattery();
     loadedScene = NULL;
     menuSysButtonPress = false;
-    checkMenuPress = true; 
+    checkMenuPress = false; 
     menuButtonCheck = true;
     sceneCounter = -1;
 
@@ -139,56 +139,58 @@ microGameAtZero_err COREENGINE::loadScene(uint16_t position)
 void ATTR_RAM COREENGINE::gameLoop()
 {
   static bool fpsShow = false;
+   while(1)
+   {
+    if(update)
+    {
+      framePerSeconds++;
 
-  if(update)
-  {
-    framePerSeconds++;
+      if(menuButtonCheck && checkMenuPress)
+      {
+        menuSysButtonPress = !menuSysButtonPress;
+        checkMenuPress = false;
+      }
+      else if(!menuButtonCheck)
+      {
+        checkMenuPress = true;
+      }
 
+      if(!menuSysButtonPress)
+      {
+        loadedScene->sceneLogic(dT);
+        renderingEngine->renderingScreen(loadedScene,fpsValue, fpsShow,false,dT); 
+
+      }
+      else
+      {
+        fpsShow = menuSys->menuSystemLogic();
+        renderingEngine->renderingScreen(systemMenuScene,fpsValue,fpsShow,true,dT);
+      }
+      update = false;
+      
+      if(soundCheck && soundNotPress)
+      {
+        soundNotPress = false;
+        volume = audio->getMainVolume();
+        if(volume <= MAX_VOLUME)
+        {
+          volume += VOLUME_STEP;
+        }
+        if(volume > MAX_VOLUME)
+        {
+          volume = 0;
+        }
+        audio->setMainVolume(volume);
+      }
+      else if(!soundCheck)
+      {
+        soundNotPress = true;
+      }
+      
+      dT = 0;
+    }
     menuButtonCheck = getInputButton(MENU);
-    if(menuButtonCheck && checkMenuPress)
-    {
-      menuSysButtonPress = !menuSysButtonPress;
-      checkMenuPress = false;
-    }
-    else if(!menuButtonCheck)
-    {
-      checkMenuPress = true;
-    }
-
-    if(!menuSysButtonPress)
-    {
-      loadedScene->sceneLogic(dT);
-      renderingEngine->renderingScreen(loadedScene,fpsValue, fpsShow,false,dT); 
-
-    }
-    else
-    {
-      fpsShow = menuSys->menuSystemLogic();
-      renderingEngine->renderingScreen(systemMenuScene,fpsValue,fpsShow,true,dT);
-    }
-    update = false;
-    
     soundCheck = getInputButton(VOLUME);
-    if(soundCheck && soundNotPress)
-    {
-      soundNotPress = false;
-      volume = audio->getMainVolume();
-      if(volume <= MAX_VOLUME)
-      {
-        volume += VOLUME_STEP;
-      }
-      if(volume > MAX_VOLUME)
-      {
-        volume = 0;
-      }
-      audio->setMainVolume(volume);
-    }
-    else if(!soundCheck)
-    {
-      soundNotPress = true;
-    }
-    
-    dT = 0;
   }
 }
 
