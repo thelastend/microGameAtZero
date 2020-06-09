@@ -6,14 +6,14 @@
 #include "../Physic/physicEngine.h"
 
 COREENGINE* COREENGINE::instance;
-uint16_t  COREENGINE::dT;
+volatile uint16_t  COREENGINE::dT;
 RENDERING2D* COREENGINE::renderingEngine;
 AUDIOENGINE* COREENGINE::audio;
 std::list<SCENE*> COREENGINE::sceneList;
 SCENE * COREENGINE::loadedScene;
-bool COREENGINE::update;
+volatile bool COREENGINE::update;
 uint8_t COREENGINE::framePerSeconds;
-uint8_t COREENGINE::fpsValue;
+volatile uint8_t COREENGINE::fpsValue;
 settingsEngine COREENGINE::settings;
 MENUSYSTEM* COREENGINE::menuSys;
 SCENE * COREENGINE::systemMenuScene;
@@ -166,6 +166,7 @@ void ATTR_RAM COREENGINE::gameLoop()
         fpsShow = menuSys->menuSystemLogic();
         renderingEngine->renderingScreen(systemMenuScene,fpsValue,fpsShow,true,dT);
       }
+      dT = 0;
       update = false;
       
       if(soundCheck && soundNotPress)
@@ -187,7 +188,6 @@ void ATTR_RAM COREENGINE::gameLoop()
         soundNotPress = true;
       }
       
-      dT = 0;
     }
     menuButtonCheck = getInputButton(MENU);
     soundCheck = getInputButton(VOLUME);

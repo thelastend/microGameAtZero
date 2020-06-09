@@ -86,12 +86,12 @@ public:
 private:
     static AUDIOENGINE* instance;
     AUDIOENGINE( );
-    static soundChannel channels[MAX_AUDIO_CHANNELS];
-    static uint8_t volumeMain;
-    static uint32_t beepCount;
-    static uint32_t beepSize;
-    static audioSampleRate_t sampleRate;
-    static bool muteOn;
+    volatile static soundChannel channels[MAX_AUDIO_CHANNELS];
+    volatile static uint8_t volumeMain;
+    volatile static uint32_t beepCount;
+    volatile static uint32_t beepSize;
+    volatile static audioSampleRate_t sampleRate;
+    volatile static bool muteOn;
 };
 
 

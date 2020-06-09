@@ -5,13 +5,13 @@
 #include "../core/middleware.h"    
 #include "beep.h"
 
-soundChannel AUDIOENGINE::channels[MAX_AUDIO_CHANNELS];
-uint8_t AUDIOENGINE::volumeMain;
-audioSampleRate_t AUDIOENGINE::sampleRate;
+volatile soundChannel AUDIOENGINE::channels[MAX_AUDIO_CHANNELS];
+volatile uint8_t AUDIOENGINE::volumeMain;
+volatile audioSampleRate_t AUDIOENGINE::sampleRate;
 AUDIOENGINE* AUDIOENGINE::instance = 0;
-bool AUDIOENGINE::muteOn;
-uint32_t AUDIOENGINE::beepCount;
-uint32_t AUDIOENGINE::beepSize;
+volatile bool AUDIOENGINE::muteOn;
+volatile uint32_t AUDIOENGINE::beepCount;
+volatile uint32_t AUDIOENGINE::beepSize;
 
 
 /**

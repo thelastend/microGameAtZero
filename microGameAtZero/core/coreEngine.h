@@ -43,15 +43,15 @@ private:
     static settingsEngine settings;
     static COREENGINE* instance;
     static AUDIOENGINE* audio;
-    static uint16_t  dT;
+    volatile static uint16_t  dT;
     static RENDERING2D *renderingEngine;
     static std::list<SCENE*> sceneList;
     static SCENE *loadedScene;
     static SCENE *systemMenuScene;
     static int16_t sceneCounter;
-    static bool update;
+    volatile static bool update;
     static uint8_t framePerSeconds;
-    static uint8_t fpsValue;
+    volatile static uint8_t fpsValue;
     static MENUSYSTEM* menuSys;
     static uint8_t volume;
     static bool soundNotPress;

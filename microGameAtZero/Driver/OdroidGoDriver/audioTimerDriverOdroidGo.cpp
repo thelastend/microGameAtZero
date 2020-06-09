@@ -6,7 +6,7 @@ timerCoreCallback callbackTimer;
 
 static microGameAtZero_err setupTimer(timer_idx_t timer, uint16_t value);
 void IRAM_ATTR timerInterrupt(void *para);
-void IRAM_ATTR timerInterrupt2(void *para);
+
 
 
 microGameAtZero_err initTimer(timerCoreCallback timerFunction)
@@ -167,14 +167,14 @@ void IRAM_ATTR timerInterrupt(void *para)
 	if((int)para == TIMER_AUDIO)
 	{
 		TIMERG0.int_clr_timers.t0 = 1;
-		TIMERG0.hw_timer[TIMER_AUDIO].config.alarm_en = 1;
 		callbackAudio();
+		TIMERG0.hw_timer[TIMER_AUDIO].config.alarm_en = 1;
 	}
 	else if ((int)para == TIMER_TIMER)
 	{
 		TIMERG0.int_clr_timers.t1 = 1;
-		TIMERG0.hw_timer[TIMER_TIMER].config.alarm_en = 1;
 		callbackTimer();
+		TIMERG0.hw_timer[TIMER_TIMER].config.alarm_en = 1;
 		
 	}
 }
